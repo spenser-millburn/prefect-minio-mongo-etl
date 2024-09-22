@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  minio:
+    image: minio/minio
+    container_name: minio
+    environment:
+      MINIO_ROOT_USER: password
+      MINIO_ROOT_PASSWORD: password
+    command: server /data
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio-data:/data
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: prefect
+      POSTGRES_DB: prefect
+    ports:
+      - "5432:5432"
+
+  server:
+    image: prefecthq/prefect:3-python3.11
+    restart: always
+    volumes:
+      - prefect:/root/.prefect
+    entrypoint: ["/bin/bash", "-c"]
+    command: ["prefect server start --host 0.0.0.0"]
+    ports:
+      - "4200:4200"
+    environment:
+      - PREFECT_API_DATABASE_CONNECTION_URL=postgresql+asyncpg://postgres:prefect@postgres:5432/prefect
+    depends_on:
+      - postgres
+
+  flowsapi:
+    # image: prefecthq/prefect:2-python3.11
+    build:
+      context: .
+    restart: always
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["sh", "-c", "sleep 1 && python ./s3_to_mongo.py"] # wait just a sec for the server to start
+    environment:
+      - PREFECT_API_URL=http://server:4200/api
+      - PREFECT_EXPERIMENTAL_ENABLE_EXTRA_RUNNER_ENDPOINTS=True
+      - PREFECT_RUNNER_SERVER_HOST=127.0.0.1
+    depends_on:
+      - server
+      - minio
+    ports:
+      - "8000:8000"
+      - "8080:8080"
+  inithelper:
+    # image: prefecthq/prefect:2-python3.11
+    build:
+      context: .
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["sh", "-c", "sleep 1 && ./config/init.sh && sleep 1 && ./config/configure-minio-webhook.sh"] # wait just a sec for the server to start
+    depends_on:
+      - server
+      - minio
+
+volumes:
+  minio-data: 
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./minio_data
+  mongo-data:
+  prefect:
