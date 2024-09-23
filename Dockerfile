@@ -11,6 +11,7 @@ ENV PREFECT_RUNNER_SERVER_HOST=127.0.0.1
 RUN apt-get update && apt-get install -y \
     wget \
     ca-certificates \
+    jq \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and install MinIO client
