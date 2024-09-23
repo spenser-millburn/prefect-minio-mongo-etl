@@ -1,15 +1,13 @@
 #!/bin/bash
+
 ALIAS_NAME="myminio"
 MINIO_URL="http://minio:9000"
 ACCESS_KEY="password"
 SECRET_KEY="password"
 
-# JSON configuration for buckets and their respective webhook endpoints
-CONFIG='[
-  {"name": "alphabot-logs-bucket", "webhook": "http://flowsapi:8000/trigger-etl"},
-  {"name": "bucket1", "webhook": "http://flowsapi:8000/trigger-bucket1"},
-  {"name": "bucket2", "webhook": ""}
-]'
+# Read JSON configuration from file
+CONFIG_FILE=$1
+CONFIG=$(cat $CONFIG_FILE)
 
 # Check if the alias is already set
 alias_exists=$(mc alias list | grep -w $ALIAS_NAME)
