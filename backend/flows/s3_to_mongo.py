@@ -3,17 +3,18 @@ from minio import Minio
 from pymongo import MongoClient
 import pandas as pd
 from io import BytesIO
+import os 
 
 # MinIO client configuration
 minio_client = Minio(
-    "minio:9000",
+    f"{os.getenv('MINIO_HOSTNAME', 'localhost')}:9000",
     access_key="password",
     secret_key="password",
     secure=False
 )
 
 # MongoDB client configuration
-mongo_client = MongoClient("mongodb://mongo:27017/")
+mongo_client = MongoClient(f"mongodb://{os.getenv('MONGO_HOSTNAME', 'localhost')}:27017/")
 db = mongo_client["loganalysis"]
 collection = db["loganalysis_collection"]
 
@@ -40,3 +41,10 @@ def etl_pipeline(bucket_name, object_name):
     df = extract_from_minio(bucket_name, object_name)
     transformed_df = transform_data(df)
     load_to_mongodb(transformed_df)
+
+    # Test the pipeline with hardcoded values
+if __name__ == "__main__":
+    test_bucket_name = "alphabot-logs-bucket"
+    test_object_name = "13.csv"
+    etl_pipeline(test_bucket_name, test_object_name)
+

@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from flows.s3_to_mongo import etl_pipeline
+from flows.minio_to_mongo import etl_pipeline
 
 app = FastAPI()
 
