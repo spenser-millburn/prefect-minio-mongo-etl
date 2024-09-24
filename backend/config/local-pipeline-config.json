@@ -1,0 +1,10 @@
+[
+  {
+    "name": "alphabot-logs-bucket",
+    "webhook": "http://localhost:8000/trigger-etl"
+  },
+  {
+    "name": "alphabot-logs-summary-bucket",
+    "webhook": "http://localhost:8000/trigger-etl"
+  }
+]

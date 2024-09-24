@@ -1,0 +1,9 @@
+[
+  {
+    "name": "alphabot-logs-bucket",
+    "webhook": "http://flowsapi:8000/trigger-etl"
+  },
+  {
+    "name": "alphabot-logs-summary-bucket"
+  }
+]
