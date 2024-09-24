@@ -1,3 +1,6 @@
 data/minio_data
 minio_data
 .vscode
+__pycache__/
+__pycache__
+*.pyc
