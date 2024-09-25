@@ -40,6 +40,7 @@ services:
   minio:
     image: minio/minio
     container_name: minio
+    restart: always
     environment:
       MINIO_ROOT_USER: password
       MINIO_ROOT_PASSWORD: password
@@ -51,6 +52,7 @@ services:
 
   mongo:
     image: mongo
+    restart: always
     container_name: mongo
     ports:
       - "27017:27017"
