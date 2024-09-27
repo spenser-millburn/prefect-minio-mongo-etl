@@ -51,7 +51,7 @@ def convert(user_path: Path) -> DataFrame:
             fromfile(temp_file.name, dtype=datalogkey), index="thl_ts"
         )
 
-def convert_all_datalogs_to_csv(directory: Path):
+def convert_all_datalogs_to_csv(directory: Path, remove_source_files:bool):
     pattern = re.compile(r'alphabot_.*-data\.txt')
 
     files = os.listdir(directory)
@@ -66,10 +66,11 @@ def convert_all_datalogs_to_csv(directory: Path):
         df = convert(user_path)
         df.to_csv(user_path.with_suffix(".csv"))
 
-    #  Delete all files except the CSVs
-    for file in files:
-        if not file.endswith('.csv'):
-            os.remove(Path(directory) / file)
+    #  Delete the source files
+    if(remove_source_files):
+        for file in files:
+            if file.endswith('-data.txt'):
+                os.remove(Path(directory) / file)
 
 def main(directory: Path):
     convert_all_datalogs_to_csv(directory)
