@@ -1,0 +1,7 @@
+2024-09-09 23:59:09.712 [TOTE] HOME          INVALID           | 000-00-000000
+2024-09-09 23:59:36.053 1.4:6.2:14.6:2.2  -> 1.4:6.2:14.6:2.3  | COMPLETE Success
+2024-09-09 23:59:40.353 1.4:6.2:14.6:2.3  -> 2.2:24.2:6.2:2.3  | COMPLETE Success
+2024-09-09 23:59:46.468 2.2:24.2:6.2:2.3  -> 2.2:20.2:6.2:2.3  | COMPLETE Success
+2024-09-09 23:59:55.269 2.2:20.2:6.2:2.3  -> 1.4:4.2:14.6:2.3  | COMPLETE Failure
+2024-09-09 23:59:57.156 [FAULT] 0C_05_00     Fatal             | Line detection failed for move which requires it
+2024-09-09 23:59:57.172 [FAULT] 11_00_00     Warning           | Bot detected a error or fatal fault from modules
