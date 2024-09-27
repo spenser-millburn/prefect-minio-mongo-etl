@@ -20,6 +20,13 @@ else
   echo "Alias $ALIAS_NAME already exists."
 fi
 
+# Remove existing notify webhooks
+existing_webhooks=$(mc admin config get $ALIAS_NAME/ | grep notify_webhook)
+if [ -n "$existing_webhooks" ]; then
+  mc admin config set $ALIAS_NAME/ notify_webhook:1 endpoint= auth_token= queue_limit=0 queue_dir= client_cert= client_key=
+  echo "Existing notify webhooks removed."
+fi
+
 # Iterate over the JSON configuration to create buckets and set webhook notifications
 echo "$CONFIG" | jq -c '.[]' | while read -r bucket; do
   BUCKET_NAME=$(echo $bucket | jq -r '.name')

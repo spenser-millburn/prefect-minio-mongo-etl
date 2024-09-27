@@ -1,1 +1,1 @@
-[   {"init.sh": "Modify the script to accept a JSON configuration file as input, which specifies the files to be created and their descriptions."} ]
+[   {     "init.sh": "Modify this file to include commands that remove existing notify webhooks before creating new ones. This might involve adding commands to list current webhooks, identify notify webhooks, and delete them before the script proceeds to create new notify webhooks."   } ]
