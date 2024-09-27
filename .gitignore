@@ -6,3 +6,5 @@ __pycache__
 *.pyc
 logfisher_output
 logfisher_output/
+modification_plan.json
+*_backup.py
