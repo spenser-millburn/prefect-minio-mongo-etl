@@ -4,3 +4,5 @@ minio_data
 __pycache__/
 __pycache__
 *.pyc
+logfisher_output
+logfisher_output/

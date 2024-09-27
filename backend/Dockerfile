@@ -20,5 +20,8 @@ RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /usr/local/bin/mc
 
 
 COPY . /app
+WORKDIR  /app/flows/snapstat_fingerprints 
+RUN pip3 install .
+WORKDIR  /app
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

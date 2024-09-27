@@ -41,7 +41,7 @@ let fn_GetFatalFaultsFromBotStats_BySite_ByTimespan = (site: string, clustername
   let Walmart_5236 = view() {fn_GetFatalFaultsFromBotStats_BySite_ByTimespan('Walmart_5236', 'adx-adm-prod-grp2.southcentralus', ['_startTime'], ['_endTime'], ['bot'], ['faultID'], ['no_faults'])}; 
     union withsource=SourceName Walmart_0100//, Walmart_0125, Walmart_0144, Walmart_0277, Walmart_0444, Walmart_0517, Walmart_1148, Walmart_1413, Walmart_2740, Walmart_2932, Walmart_3207, Walmart_3226, Walmart_3258, Walmart_3267, Walmart_3278, Walmart_3295, Walmart_5092, Walmart_5236 
     | where fault_type == "Fatal" 
-    | where timestamp between (ago(450h) .. ago(375h)) 
+    | where timestamp between (ago(551h) .. ago(375h)) 
     | order by timestamp asc 
     | project fault_id, __grid_id, timestamp, current_ucc, SourceName, __ab_ver
 
