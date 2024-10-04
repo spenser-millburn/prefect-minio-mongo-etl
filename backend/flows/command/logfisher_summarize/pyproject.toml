@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "logfisher_summary_flow"
+version = "1.0.0"
+description = "flow for logfisher summaries"
+authors = ["Spenser Millburn <spenser@example.com>"]
+license = "MIT"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+files = [
+    "ACPTable.txt",
+    "config.toml",
+    "EmbeddedFaultTable.csv"
+]

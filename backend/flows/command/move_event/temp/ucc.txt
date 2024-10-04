@@ -1,0 +1,126 @@
+Key Elements of UCC:
+Problem Statement:
+
+Need for a unique identification of locations in robotic systems.
+Requirements include compact format, human readability, and structured, well-defined coordinates that fit within storage and data rate limitations.
+Solution:
+
+Structure: UCC consists of 4 pairs of whole numbers (Area.Type, Xmajor.Xminor, Ymajor.Yminor, Zmajor.Zminor).
+The shorthand notation is: A.t X.x Y.y Z.z.
+The UCC provides a way to uniquely identify each position based on the system's layout and axis.
+Coordinate System:
+
+X-Axis: West to East.
+Y-Axis: South to North.
+Z-Axis: Bottom to top.
+The coordinates are tied to the location of structures like racks, decks, towers, and workstations, ensuring clear paths and locations for bots to move.
+RFID Tags:
+
+RFID tags encode the UCC coordinates, which bots use for navigation.
+Data ranges are defined for major and minor components of each axis.
+Topmost bit of the Area component is reserved for the RFID reader.
+Structure Types:
+
+Examples include full towers, half towers, storage channels, decks, workstations, and others, each having its own unique UCC configuration.
+Move Commands:
+
+The UCC system uses source (SRC) and destination (DEST) coordinates in move commands for robots. Each move is constrained to changes along only one axis at a time.
+A robot must receive two sequential moves to transition through a tower (as robots don’t have a map).
+Multi-Agent and Split Agent Positions:
+
+These positions allow for complex navigation setups where multiple coordinate frames interact. Double and split agent positions facilitate smooth transitions between different structure types.
+Future Flexibility:
+
+The UCC architecture is designed to be flexible for future configurations, allowing multi-agent positions, towers within decks, and various deck arrangements.
+This document provides an extensive blueprint for implementing a universal coordinate system in a robot-controlled environment, ensuring precise navigation and interaction within a structured space.
+
+Let me know if you need a more detailed section or further clarification!
+
+
+Here are examples of different move commands using the UCC (Universal Coordinate Code) for both source (SRC) and destination (DEST) moves. These demonstrate various scenarios such as moving within decks, racks, and towers:
+
+1. Deck-to-Deck Move
+In this example, the robot is moving between two different locations on the same deck. This type of move only changes the X and Y axes (streets and avenues), while the Z axis (deck height) remains constant.
+
+Source (SRC):
+UCC: (1.2) 1.2, 1.2, 1.4
+
+Area: 1 (Deck Type)
+X (Street): 1.2 (Center position on the street)
+Y (Avenue): 1.2 (Center position on the avenue)
+Z (Height): 1.4 (Fixed deck height)
+Destination (DEST):
+UCC: (1.2) 1.2, 6.2, 1.4
+
+Area: 1 (Deck Type)
+X (Street): 1.2 (Center position remains the same)
+Y (Avenue): 6.2 (Moving to a new avenue)
+Z (Height): 1.4 (Deck height remains the same)
+2. Tower-to-Deck Move (via Double Agent)
+In this scenario, the robot moves from a tower to a deck using a double agent position (a transition point between tower and deck). The type changes from tower to deck.
+
+Source (SRC):
+UCC: (1.3) 1.2, 1.0, 1.4
+
+Area: 1 (Tower Type)
+X (Street): 1.2 (Tower street position)
+Y (Avenue): 1.0 (Specific to the tower)
+Z (Height): 1.4 (Specific floor of the tower)
+Destination (DEST):
+UCC: (1.2) 1.2, 6.2, 1.4
+
+Area: 1 (Deck Type)
+X (Street): 1.2 (Center position on the deck)
+Y (Avenue): 6.2 (Deck avenue location)
+Z (Height): 1.4 (Deck height matches the tower floor)
+3. Rack-to-Tower Move
+This example involves moving from a rack position to a tower. The X axis is constant, but both the Y axis and type change.
+
+Source (SRC):
+UCC: (1.4) 3.2, 1.2, 1.1
+
+Area: 1 (Rack Type)
+X (Street): 3.2 (Rack street position)
+Y (Avenue): 1.2 (Rack aisle position)
+Z (Height): 1.1 (Specific floor in the rack)
+Destination (DEST):
+UCC: (1.3) 3.2, 1.0, 1.1
+
+Area: 1 (Tower Type)
+X (Street): 3.2 (Tower street position remains the same)
+Y (Avenue): 1.0 (Tower aisle position)
+Z (Height): 1.1 (Floor in the tower corresponds to the rack height)
+4. Workstation Move
+This example involves movement within a workstation, where both the X and Y coordinates may change but the Z coordinate (height) remains the same.
+
+Source (SRC):
+UCC: (1.1) 2.2, 1.1, 1.3
+
+Area: 1 (Workstation Type)
+X (Street): 2.2 (Workstation X position)
+Y (Avenue): 1.1 (Workstation aisle)
+Z (Height): 1.3 (Specific level in the workstation)
+Destination (DEST):
+UCC: (1.1) 2.2, 2.2, 1.3
+
+Area: 1 (Workstation Type)
+X (Street): 2.2 (X position remains the same)
+Y (Avenue): 2.2 (Moving to a different aisle)
+Z (Height): 1.3 (Same workstation level)
+5. Rack-to-Rack Move
+This example demonstrates a move within a rack where the X axis is fixed, and the Y axis changes to move to a different aisle.
+
+Source (SRC):
+UCC: (1.4) 3.2, 1.2, 1.1
+
+Area: 1 (Rack Type)
+X (Street): 3.2 (Rack street position)
+Y (Avenue): 1.2 (Current aisle in the rack)
+Z (Height): 1.1 (Floor position)
+Destination (DEST):
+UCC: (1.4) 3.2, 2.3, 1.1
+
+Area: 1 (Rack Type)
+X (Street): 3.2 (Street remains the same)
+Y (Avenue): 2.3 (Moving to a new aisle in the rack)
+Z (Height): 1.1 (Same floor level)

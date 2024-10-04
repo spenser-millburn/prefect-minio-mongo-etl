@@ -3,7 +3,7 @@ FROM prefecthq/prefect:3-python3.11
 WORKDIR /app
 
 
-RUN pip3 install minio pymongo pandas fastapi uvicorn
+RUN pip3 install minio pymongo pandas fastapi uvicorn matplotlib plotly pandas nbformat prefect nbconvert ipykernel
 
 ENV PREFECT_API_URL=http://server:4200/api
 ENV PREFECT_EXPERIMENTAL_ENABLE_EXTRA_RUNNER_ENDPOINTS=True
@@ -21,6 +21,10 @@ RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /usr/local/bin/mc
 
 COPY . /app
 WORKDIR  /app/flows/snapstat_fingerprints 
+RUN pip3 install .
+WORKDIR  /app/flows/controls/
+RUN pip3 install .
+WORKDIR  /app/flows/command/logfisher_summarize/
 RUN pip3 install .
 WORKDIR  /app
 

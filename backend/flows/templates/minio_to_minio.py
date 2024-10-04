@@ -48,7 +48,7 @@ def create_etl_artifact(bucket_name, object_name):
 
 @flow
 def minio_to_minio(source_bucket_name, source_object_name, target_bucket_name, target_object_name):
-    print("BUCKET", source_bucket_name,"OBJECT",  source_object_name) 
+    print("FLOW","minio_to_minio_template", "BUCKET", source_bucket_name,"OBJECT",  source_object_name) 
     df = extract_from_minio(source_bucket_name, source_object_name)
     transformed_df = transform_data(df)
     load_to_minio(transformed_df, target_bucket_name, target_object_name)

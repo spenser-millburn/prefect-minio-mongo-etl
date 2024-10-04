@@ -27,7 +27,7 @@ def extract_from_minio(bucket_name, object_name):
     return df
 
 @task
-def transform_data(df):
+def transform_data(df, lambda_transform):
     # Perform any data transformation here
     # df['new_column'] = df['existing_column'] * 2  # Example transformation
     return df
@@ -56,4 +56,4 @@ def minio_to_mongo(bucket_name, object_name):
 if __name__ == "__main__":
     test_bucket_name = "alphabot-logs-bucket"
     test_object_name = "13.csv"
-    etl_pipeline(test_bucket_name, test_object_name)
+    minio_to_mongo(test_bucket_name, test_object_name)

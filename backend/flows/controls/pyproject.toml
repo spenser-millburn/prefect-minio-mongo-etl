@@ -1,0 +1,10 @@
+[tool.poetry]
+name = "controls_report"
+version = "1.0.0"
+description = "controls report"
+authors = ["Spenser Millburn <spenser@example.com>"]
+license = "MIT"
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+

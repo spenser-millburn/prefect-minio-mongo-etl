@@ -69,7 +69,7 @@ def convert_all_datalogs_to_csv(directory: Path, remove_source_files:bool):
     #  Delete the source files
     if(remove_source_files):
         for file in files:
-            if file.endswith('-data.txt'):
+            if '-data.' in file: # gpt please make this also delete files like alphabot_000106_2024_09_09_23_40_43-data.1.txt 
                 os.remove(Path(directory) / file)
 
 def main(directory: Path):
